@@ -3,11 +3,12 @@
 [![Build Status](https://travis-ci.org/osism/docker-ceph-container.svg?branch=master)](https://travis-ci.org/osism/docker-ceph-container)
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-osism%2Fceph-daemon-blue.svg)](https://hub.docker.com/r/osism/ceph-daemon/)
 
-Ubuntu images have not been provided by the ``ceph-container`` upstream since the
-end of August 2018.
+Ubuntu images have not been provided by the [ceph/ceph-container](https://github.com/ceph/ceph-container)
+upstream since the end of August 2018.
 
 This image is a workaround to seamlessly migrate environments running on
-Ubuntu images to CentOS images.
+Ubuntu images to CentOS images. [ceph/daemon](https://hub.docker.com/r/ceph/daemon/)
+is used as the basis for this container.
 
 Due to this workaround, it is not necessary to adjust the existing file
 permissions of ``/var/lib/ceph`` during the rolling update.
