@@ -13,6 +13,9 @@ env:
     - VERSION=v3.2.7-stable-3.2-luminous
     - VERSION=v4.0.4-stable-4.0-nautilus
 
+before_script:
+  - bash scripts/lint.sh
+
 script:
   - bash scripts/build.sh
 
