@@ -12,6 +12,7 @@ env:
     - VERSION=v3.2.1-stable-3.2-luminous
     - VERSION=v3.2.7-stable-3.2-luminous
     - VERSION=v4.0.4-stable-4.0-nautilus
+    - VERSION=v4.0.5-stable-4.0-nautilus
 
 before_script:
   - bash scripts/lint.sh
