@@ -27,4 +27,9 @@ else
         --tag "$REPOSITORY:$VERSION-centos-7-x86_64" \
         --squash \
         $BUILD_OPTS .
+
+    if [[ "$TRAVIS_PULL_REQUEST" == "false" && ( "$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG" ) ]]; then
+        docker push "$REPOSITORY:$VERSION-centos-7-x86_64"
+        docker rmi "$REPOSITORY:$VERSION-centos-7-x86_64"
+    fi
 fi
