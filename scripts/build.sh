@@ -18,18 +18,26 @@ function docker_tag_exists() {
     test $EXISTS == true
 }
 
-if docker_tag_exists $REPOSITORY $VERSION-centos-7-x86_64; then
+docker_tag_exists $REPOSITORY $VERSION-centos-7-x86_64
+
+if [[ $VERSION != "latest" && $? -eq 0 ]]; then
     echo "The image $REPOSITORY:$VERSION already exists."
 else
+    if [[ $VERSION == "latest" ]]; then
+        tag="latest"
+    else
+        tag="$VERSION-centos-7-x86_64"
+    fi
+
     docker build \
-        --build-arg "VERSION=$VERSION" \
+        --build-arg "TAG=$tag" \
         --label "io.osism.${REPOSITORY#osism/}=$HASH_REPOSITORY" \
-        --tag "$REPOSITORY:$VERSION-centos-7-x86_64" \
+        --tag "$REPOSITORY:$tag" \
         --squash \
         $BUILD_OPTS .
 
     if [[ "$TRAVIS_PULL_REQUEST" == "false" && ( "$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG" ) ]]; then
-        docker push "$REPOSITORY:$VERSION-centos-7-x86_64"
-        docker rmi "$REPOSITORY:$VERSION-centos-7-x86_64"
+        docker push "$REPOSITORY:$tag"
+        docker rmi "$REPOSITORY:$tag"
     fi
 fi
