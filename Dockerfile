@@ -1,5 +1,5 @@
-ARG VERSION
-FROM ceph/daemon:$VERSION-centos-7-x86_64
+ARG TAG
+FROM ceph/daemon:$TAG
 
 LABEL maintainer="Betacloud Solutions GmbH (https://www.betacloud-solutions.de)"
 

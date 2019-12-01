@@ -9,6 +9,7 @@ env:
   global:
     - REPOSITORY=osism/ceph-daemon
   matrix:
+    - VERSION=latest
     - VERSION=v3.1.0-stable-3.1-luminous
     - VERSION=v3.2.1-stable-3.2-luminous
     - VERSION=v3.2.7-stable-3.2-luminous
