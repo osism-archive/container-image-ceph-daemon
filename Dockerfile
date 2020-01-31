@@ -1,8 +1,6 @@
 ARG TAG
 FROM ceph/daemon:$TAG
 
-LABEL maintainer="Betacloud Solutions GmbH (https://www.betacloud-solutions.de)"
-
 # Change the UID and GID of the Ceph user/group from 167 to 64045.
 RUN usermod -u 64045 ceph
 RUN groupmod -g 64045 ceph
