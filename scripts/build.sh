@@ -3,12 +3,14 @@
 # Available environment variables
 #
 # BUILD_OPTS
+# DISTRIBUTION
 # REPOSITORY
 # VERSION
 
 # Set default values
 
 BUILD_OPTS=${BUILD_OPTS:-}
+DISTRIBUTION=${DISTRIBUTION:-centos-7}
 CREATED=$(date --rfc-3339=ns)
 REVISION=$(git rev-parse --short HEAD)
 VERSION=${VERSION:-latest}
@@ -20,7 +22,7 @@ function docker_tag_exists() {
     test $EXISTS == true
 }
 
-docker_tag_exists $REPOSITORY $VERSION-centos-7-x86_64
+docker_tag_exists $REPOSITORY $VERSION-$DISTRIBUTION-x86_64
 
 if [[ $VERSION != "latest" && $? -eq 0 ]]; then
     echo "The image $REPOSITORY:$VERSION already exists."
@@ -28,7 +30,7 @@ else
     if [[ $VERSION == "latest" ]]; then
         tag="latest"
     else
-        tag="$VERSION-centos-7-x86_64"
+        tag="$VERSION-$DISTRIBUTION-x86_64"
     fi
 
     docker build \
