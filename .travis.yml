@@ -17,7 +17,9 @@ env:
     - VERSION=v4.0.9-stable-4.0-nautilus DISTRIBUTION=centos-7
     - VERSION=v4.0.10-stable-4.0-nautilus DISTRIBUTION=centos-7
     - VERSION=v4.0.11-stable-4.0-nautilus DISTRIBUTION=centos-7
+    - VERSION=v4.0.12-stable-4.0-nautilus DISTRIBUTION=centos-7
     - VERSION=v5.0.0-stable-5.0-octopus DISTRIBUTION=centos-8
+    - VERSION=v5.0.1-stable-5.0-octopus DISTRIBUTION=centos-8
 
 before_script:
   - bash scripts/lint.sh
