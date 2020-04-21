@@ -9,6 +9,11 @@ RUN groupmod -g 64045 ceph
 RUN find / -path /proc -prune -o -group 167 -exec chgrp -h ceph {} \;
 RUN find / -path /proc -prune -o -user 167 -exec chown -h ceph {} \;
 
+# Install zabbix40 package to be able to use /usr/bin/zabbix_sender
+RUN yum update \
+    && yum install -y zabbix40 \
+    && yum clean all
+
 LABEL "org.opencontainers.image.documentation"="https://docs.osism.io" \
       "org.opencontainers.image.licenses"="ASL 2.0" \
       "org.opencontainers.image.source"="https://github.com/osism/docker-ceph-container" \
