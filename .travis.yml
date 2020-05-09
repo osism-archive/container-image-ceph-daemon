@@ -14,6 +14,8 @@ env:
     - VERSION=v3.2.8-stable-3.2-luminous DISTRIBUTION=centos-7
     - VERSION=v3.2.10-stable-3.2-luminous DISTRIBUTION=centos-7
     - VERSION=v3.2.11-stable-3.2-luminous DISTRIBUTION=centos-7
+    - VERSION=v3.2.12-stable-3.2-luminous DISTRIBUTION=centos-7
+    - VERSION=v3.2.13-stable-3.2-luminous DISTRIBUTION=centos-7
     - VERSION=v4.0.9-stable-4.0-nautilus DISTRIBUTION=centos-7
     - VERSION=v4.0.10-stable-4.0-nautilus DISTRIBUTION=centos-7
     - VERSION=v4.0.11-stable-4.0-nautilus DISTRIBUTION=centos-7
