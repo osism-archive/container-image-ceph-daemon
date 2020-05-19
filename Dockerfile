@@ -10,7 +10,7 @@ RUN find / -path /proc -prune -o -group 167 -exec chgrp -h ceph {} \;
 RUN find / -path /proc -prune -o -user 167 -exec chown -h ceph {} \;
 
 # Install zabbix40 package to be able to use /usr/bin/zabbix_sender
-RUN yum update \
+RUN yum update -y \
     && yum install -y zabbix40 \
     && yum clean all
 
