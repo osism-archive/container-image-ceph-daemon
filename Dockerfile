@@ -16,7 +16,7 @@ RUN yum update -y \
 
 # Install zabbix-sender package to be able to use /usr/bin/zabbix_sender
 RUN centos_version="$(tr -dc '0-9.' < /etc/centos-release | cut -d \. -f1)" \
-    && rpm -Uvh "https://repo.zabbix.com/zabbix/5.0/rhel/${centos_version}/x86_64/zabbix-release-5.1-1.el${centos_version}.noarch.rpm" \
+    && rpm -Uvh "https://repo.zabbix.com/zabbix/5.1/rhel/${centos_version}/x86_64/zabbix-release-5.1-1.el${centos_version}.noarch.rpm" \
     && yum install -y zabbix-sender \
     && yum clean all
 
