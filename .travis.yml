@@ -10,9 +10,9 @@ env:
     - REPOSITORY=osism/ceph-daemon
   matrix:
     - VERSION=latest
-    - VERSION=v3.2.13-stable-3.2-luminous DISTRIBUTION=centos-7
-    - VERSION=v4.0.12-stable-4.0-nautilus DISTRIBUTION=centos-7
-    - VERSION=v5.0.1-stable-5.0-octopus DISTRIBUTION=centos-8
+    - VERSION=v3.2.14-stable-3.2-luminous DISTRIBUTION=centos-7
+    - VERSION=v4.0.14-stable-4.0-nautilus DISTRIBUTION=centos-7
+    - VERSION=v5.0.3-stable-5.0-octopus DISTRIBUTION=centos-8
 
 before_script:
   - bash scripts/lint.sh
