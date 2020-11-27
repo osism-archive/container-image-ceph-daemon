@@ -10,12 +10,14 @@ on:  # yamllint disable-line rule:truthy
       - Dockerfile
       - files/**
       - patches/**
+      - scripts/**
   pull_request:
     paths:
       - .github/workflows/build-docker-image.yml
       - Dockerfile
       - files/**
       - patches/**
+      - scripts/**
 
 jobs:
 
@@ -43,12 +45,12 @@ jobs:
       - run: scripts/build.sh
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-          OPENSTACK_VERSION: ${{ matrix.openstack_version }}
+          VERSION: ${{ matrix.version }}
           REPOSITORY: osism/ceph-daemon
       - run: |
           scripts/push.sh
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-          OPENSTACK_VERSION: ${{ matrix.openstack_version }}
+          VERSION: ${{ matrix.version }}
           REPOSITORY: osism/ceph-daemon
         if: github.ref == 'refs/heads/master'
