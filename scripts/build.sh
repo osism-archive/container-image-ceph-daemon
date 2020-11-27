@@ -3,47 +3,37 @@
 # Available environment variables
 #
 # BUILD_OPTS
-# DISTRIBUTION
 # REPOSITORY
 # VERSION
 
 # Set default values
 
 BUILD_OPTS=${BUILD_OPTS:-}
-DISTRIBUTION=${DISTRIBUTION:-centos-7}
 CREATED=$(date --rfc-3339=ns)
+REPOSITORY=${REPOSITORY:-osism/ceph-daemon}
 REVISION=$(git rev-parse --short HEAD)
 VERSION=${VERSION:-latest}
 
-# source: https://stackoverflow.com/questions/32113330/check-if-imagetag-combination-already-exists-on-docker-hub
-function docker_tag_exists() {
-    TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${TRAVIS_DOCKER_USERNAME}'", "password": "'${TRAVIS_DOCKER_PASSWORD}'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
-    EXISTS=$(curl -s -H "Authorization: JWT ${TOKEN}" https://hub.docker.com/v2/repositories/$1/tags/?page_size=10000 | jq -r "[.results | .[] | .name == \"$2\"] | any")
-    test $EXISTS == true
-}
+if [[ $VERSION == *"octopus"* ]]; then
+    DISTRIBUTION=centos-8
+else
+    DISTRIBUTION=centos-7
+fi
 
-docker_tag_exists $REPOSITORY $VERSION-$DISTRIBUTION-x86_64
-
-if [[ $VERSION != "latest" && $? -eq 0 ]]; then
+if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $REPOSITORY:$$VERSION-$DISTRIBUTION-x86_64>/dev/null; then
     echo "The image $REPOSITORY:$VERSION already exists."
 else
     if [[ $VERSION == "latest" ]]; then
-        tag="latest"
+        version="latest"
     else
-        tag="$VERSION-$DISTRIBUTION-x86_64"
+        version="$VERSION-$DISTRIBUTION-x86_64"
     fi
 
     docker build \
-        --build-arg "TAG=$tag" \
-        --tag "$REPOSITORY:$tag" \
+        --build-arg "VERSION=$version" \
+        --tag "$REPOSITORY:$version" \
         --label "org.opencontainers.image.created=$CREATED" \
         --label "org.opencontainers.image.revision=$REVISION" \
         --label "org.opencontainers.image.version=$VERSION" \
-        --squash \
         $BUILD_OPTS .
-
-    if [[ "$TRAVIS_PULL_REQUEST" == "false" && ( "$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG" ) ]]; then
-        docker push "$REPOSITORY:$tag"
-        docker rmi "$REPOSITORY:$tag"
-    fi
 fi
