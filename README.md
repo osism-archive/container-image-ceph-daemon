@@ -1,6 +1,5 @@
 # docker-ceph-container
 
-[![Build Status](https://travis-ci.org/osism/docker-ceph-container.svg?branch=master)](https://travis-ci.org/osism/docker-ceph-container)
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-osism%2Fceph--daemon-blue.svg)](https://hub.docker.com/r/osism/ceph-daemon/)
 
 Ubuntu images have not been provided by the [ceph/ceph-container](https://github.com/ceph/ceph-container)
@@ -15,8 +14,3 @@ permissions of ``/var/lib/ceph`` during the rolling update.
 
 To use this container it is necessary to always set the ``ceph_uid`` fact in
 ``ceph-ansible`` to ``64045``.
-
-Author information
-------------------
-
-This Docker image was created by [Betacloud Solutions GmbH](https://www.betacloud-solutions.de).
