@@ -1,6 +1,6 @@
 # docker-ceph-container
 
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-osism%2Fceph--daemon-blue.svg)](https://hub.docker.com/r/osism/ceph-daemon/)
+[![Quay](https://img.shields.io/badge/Quay-osism%2Fceph--daemon-blue.svg)](https://quay.io/repository/osism/ceph-daemon)
 
 Ubuntu images have not been provided by the [ceph/ceph-container](https://github.com/ceph/ceph-container)
 upstream since the end of August 2018.
