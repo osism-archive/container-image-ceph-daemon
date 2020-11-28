@@ -32,6 +32,6 @@ else
     docker push "${REPOSITORY}:${tag}"
 fi
 
-tag_release=$("${tag}" | rev | cut -d- -f1 | rev)
+tag_release=$(echo "${tag}" | rev | cut -d- -f1 | rev)
 docker tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_release}"
 docker push "${REPOSITORY}:${tag_release}"
