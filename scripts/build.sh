@@ -22,20 +22,16 @@ else
     DISTRIBUTION=centos-7
 fi
 
-if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect "${REPOSITORY}:${VERSION}-${DISTRIBUTION}"-x86_64>/dev/null; then
-    echo "The image ${REPOSITORY}:${VERSION} already exists."
+if [[ "${VERSION}" == "latest" ]]; then
+    version="latest"
 else
-    if [[ "${VERSION}" == "latest" ]]; then
-        version="latest"
-    else
-        version="${VERSION}-${DISTRIBUTION}-x86_64"
-    fi
-
-    docker build \
-        --build-arg "VERSION=${version}" \
-        --tag "${REPOSITORY}:${version}" \
-        --label "org.opencontainers.image.created=${CREATED}" \
-        --label "org.opencontainers.image.revision=${REVISION}" \
-        --label "org.opencontainers.image.version=${VERSION}" \
-        .
+    version="${VERSION}-${DISTRIBUTION}-x86_64"
 fi
+
+docker build \
+    --build-arg "VERSION=${version}" \
+    --tag "${REPOSITORY}:${version}" \
+    --label "org.opencontainers.image.created=${CREATED}" \
+    --label "org.opencontainers.image.revision=${REVISION}" \
+    --label "org.opencontainers.image.version=${VERSION}" \
+    .
