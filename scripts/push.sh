@@ -26,4 +26,12 @@ else
     tag="${VERSION}-${DISTRIBUTION}-x86_64"
 fi
 
-docker push "${REPOSITORY}:${tag}"
+if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect "${REPOSITORY}:${VERSION}-${DISTRIBUTION}"-x86_64>/dev/null; then
+    echo "The image ${REPOSITORY}:${VERSION} already exists."
+else
+    docker push "${REPOSITORY}:${tag}"
+fi
+
+tag_release=$("${tag}" | rev | cut -d- -f1 | rev)
+docker tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_release}"
+docker push "${REPOSITORY}:${tag_release}"
