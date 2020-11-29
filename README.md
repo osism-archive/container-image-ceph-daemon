@@ -1,4 +1,4 @@
-# docker-ceph-container
+# docker-image-ceph-container
 
 [![Quay](https://img.shields.io/badge/Quay-osism%2Fceph--daemon-blue.svg)](https://quay.io/repository/osism/ceph-daemon)
 
