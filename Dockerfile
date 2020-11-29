@@ -22,6 +22,6 @@ RUN centos_version="$(tr -dc '0-9.' < /etc/centos-release | cut -d \. -f1)" \
 
 LABEL "org.opencontainers.image.documentation"="https://docs.osism.de" \
       "org.opencontainers.image.licenses"="ASL 2.0" \
-      "org.opencontainers.image.source"="https://github.com/osism/docker-ceph-container" \
+      "org.opencontainers.image.source"="https://github.com/osism/docker-image-ceph-container" \
       "org.opencontainers.image.url"="https://www.osism.de" \
       "org.opencontainers.image.vendor"="Betacloud Solutions GmbH"
