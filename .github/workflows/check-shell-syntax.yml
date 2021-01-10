@@ -1,7 +1,7 @@
 ---
 name: Check shell syntax
 
-on:  # yamllint disable-line rule:truthy
+"on":
   push:
     paths:
       - '**.sh'
@@ -13,9 +13,7 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   check-shell-syntax:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: ludeeus/action-shellcheck@master
