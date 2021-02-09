@@ -30,6 +30,7 @@ jobs:
         version:
           - v3.2.14-stable-3.2-luminous
           - v4.0.17-stable-4.0-nautilus
+          - v4.0.18-stable-4.0-nautilus
           - v5.0.6-stable-5.0-octopus
 
     steps:
