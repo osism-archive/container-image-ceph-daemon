@@ -14,7 +14,7 @@ VERSION=${VERSION:-latest}
 
 REPOSITORY="${DOCKER_REGISTRY}/${REPOSITORY}"
 
-if [[ "${VERSION}" == *"octopus"* ]]; then
+if [[ "${VERSION}" == *"octopus"* || "${VERSION}" == *"pacific"* ]]; then
     DISTRIBUTION=centos-8
 else
     DISTRIBUTION=centos-7
