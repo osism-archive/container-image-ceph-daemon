@@ -1,30 +1,31 @@
 #!/usr/bin/python3
 #
-# CI-Script to update .github/workflows/build-docker-image.yml with the latest Versions for
+# CI-Script to update .github/workflows/build-docker-image.yml
+# with the latest Versions for
 # the Job "build-docker-image", subkey:
 #   strategy:
 #     matrix:
 #       version:
 #
-###################################################################################################
+##############################################################################
 import urllib.request
 import urllib.parse
 import json
 
-
-###################################################################################################
+##############################################################################
 # Variables
-###################################################################################################
-docker_api = "https://registry.hub.docker.com/api/content/v1/repositories/public/"
+##############################################################################
+docker_api = \
+    "https://registry.hub.docker.com/api/content/v1/repositories/public/"
 file = ".github/workflows/build-docker-image.yml"
 
 
-###################################################################################################
+##############################################################################
 # Functions
-###################################################################################################
+##############################################################################
 
 def get_schema_is_valid(tag_name, schema, release):
-    if schema == "vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-*":
+    if schema == "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*":
         # String must start with a "v"
         if not tag_name.startswith("v"):
             return False
@@ -39,7 +40,7 @@ def get_schema_is_valid(tag_name, schema, release):
         if len(dash_split) < 4:
             return False
 
-        # Inspect first part: vNUMBER.NUMBER.NUMBER
+        # Inspect first part: vNUM.NUM.NUM
         try:
             helper1 = dash_split[0][1:].split(".")
         except ValueError:
@@ -48,14 +49,16 @@ def get_schema_is_valid(tag_name, schema, release):
         if len(helper1) != 3:
             return False
 
-        if not helper1[0].isdigit() or not helper1[1].isdigit() or not helper1[2].isdigit():
+        if not helper1[0].isdigit() or \
+                not helper1[1].isdigit() or \
+                not helper1[2].isdigit():
             return False
 
         # Inspect second part: stable
         if not dash_split[1] == "stable":
             return False
 
-        # Inspect third part: NUMBER.NUMBER
+        # Inspect third part: NUM.NUM
         try:
             helper3 = dash_split[2].split(".")
         except ValueError:
@@ -81,50 +84,73 @@ def get_api_generic_latest_tag(api, owner, repo, key):
         return json.loads(url.read().decode())
 
 
-def get_api_docker_latest_tag(owner, repo, schema, release, page_number=1):
-    query_extension="tags?page_size=100"
-    query_extension=query_extension + "&page=" + str(page_number)
-    result = get_api_generic_latest_tag(docker_api, owner, repo, query_extension)
+def get_api_docker_latest_tag(owner, repo, schema, release, page_NUM=1):
+    query_extension = "tags?page_size=100"
+    query_extension = query_extension + "&page=" + str(page_NUM)
+    result = get_api_generic_latest_tag(docker_api,
+                                        owner,
+                                        repo,
+                                        query_extension)
     for entry in result['results']:
         if get_schema_is_valid(entry['name'], schema, release):
             return entry['name']
 
     # if none was found, recall yourself
-    return get_api_docker_latest_tag(owner, repo, schema, release, page_number + 1)
+    return get_api_docker_latest_tag(owner,
+                                     repo,
+                                     schema,
+                                     release,
+                                     page_NUM + 1)
 
 
-###################################################################################################
+##############################################################################
 
 def get_luminous_latest_tag():
-    return_value = get_api_docker_latest_tag("ceph", "daemon-base", "vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-*", "luminous")
-    # Transform vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-* into vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING
-    return_value = return_value.split("-")
-    return_value = return_value[0] + "-" + return_value[1] + "-" + return_value[2] + "-" + return_value[3]
-    return return_value
+    rvalue = get_api_docker_latest_tag("ceph",
+                                       "daemon-base",
+                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
+                                       "luminous")
+    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
+    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
+    rvalue = rvalue.split("-")
+    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
+    return rvalue
 
 
 def get_nautilus_latest_tag():
-    return_value = get_api_docker_latest_tag("ceph", "daemon-base", "vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-*", "nautilus")
-    # Transform vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-* into vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING
-    return_value = return_value.split("-")
-    return_value = return_value[0] + "-" + return_value[1] + "-" + return_value[2] + "-" + return_value[3]
-    return return_value
+    rvalue = get_api_docker_latest_tag("ceph",
+                                       "daemon-base",
+                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
+                                       "nautilus")
+    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
+    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
+    rvalue = rvalue.split("-")
+    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
+    return rvalue
 
 
 def get_octopus_latest_tag():
-    return_value = get_api_docker_latest_tag("ceph", "daemon-base", "vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-*", "octopus")
-    # Transform vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-* into vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING
-    return_value = return_value.split("-")
-    return_value = return_value[0] + "-" + return_value[1] + "-" + return_value[2] + "-" + return_value[3]
-    return return_value
+    rvalue = get_api_docker_latest_tag("ceph",
+                                       "daemon-base",
+                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
+                                       "octopus")
+    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
+    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
+    rvalue = rvalue.split("-")
+    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
+    return rvalue
 
 
 def get_pacific_latest_tag():
-    return_value = get_api_docker_latest_tag("ceph", "daemon-base", "vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-*", "pacific")
-    # Transform vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING-* into vNUMBER.NUMBER.NUMBER-stable-NUMBER.NUMBER-STRING
-    return_value = return_value.split("-")
-    return_value = return_value[0] + "-" + return_value[1] + "-" + return_value[2] + "-" + return_value[3]
-    return return_value
+    rvalue = get_api_docker_latest_tag("ceph",
+                                       "daemon-base",
+                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
+                                       "pacific")
+    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
+    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
+    rvalue = rvalue.split("-")
+    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
+    return rvalue
 
 
 def set_build_docker_image(
@@ -154,9 +180,9 @@ def set_build_docker_image(
             stream.write(line)
 
 
-###################################################################################################
+##############################################################################
 # Main
-###################################################################################################
+##############################################################################
 set_build_docker_image(get_luminous_latest_tag(),
                        get_nautilus_latest_tag(),
                        get_octopus_latest_tag(),
