@@ -26,7 +26,7 @@ else
     tag="${VERSION}-${DISTRIBUTION}-x86_64"
 fi
 
-tag_version=$(${VERSION:1} | cut -d- -f1)
+tag_version=$(echo ${VERSION:1} | cut -d- -f1)
 if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect "${REPOSITORY}:${tag_version}" > /dev/null; then
     echo "The image ${REPOSITORY}:${tag_version} already exists."
 else
