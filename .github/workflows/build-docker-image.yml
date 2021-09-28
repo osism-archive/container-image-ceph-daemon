@@ -29,10 +29,8 @@ jobs:
     strategy:
       matrix:
         version:
-          - v3.2.15-stable-3.2-luminous
-          - v4.0.22-stable-4.0-nautilus
-          - v5.0.12-stable-5.0-octopus
-          - v6.0.4-stable-6.0-pacific
+          - v5.0.13-stable-5.0-octopus
+          - v6.0.5-stable-6.0-pacific
 
     steps:
       - uses: actions/checkout@v2
