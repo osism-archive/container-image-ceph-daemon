@@ -16,7 +16,7 @@ import json
 # Variables
 ##############################################################################
 docker_api = \
-    "https://registry.hub.docker.com/api/content/v1/repositories/public/"
+    "https://quay.io/api/v1/repository/"
 file = ".github/workflows/build-docker-image.yml"
 
 
@@ -85,13 +85,13 @@ def get_api_generic_latest_tag(api, owner, repo, key):
 
 
 def get_api_docker_latest_tag(owner, repo, schema, release, page_NUM=1):
-    query_extension = "tags?page_size=100"
+    query_extension = "tag/?limit=100"
     query_extension = query_extension + "&page=" + str(page_NUM)
     result = get_api_generic_latest_tag(docker_api,
                                         owner,
                                         repo,
                                         query_extension)
-    for entry in result['results']:
+    for entry in result['tags']:
         if get_schema_is_valid(entry['name'], schema, release):
             return entry['name']
 
@@ -104,29 +104,6 @@ def get_api_docker_latest_tag(owner, repo, schema, release, page_NUM=1):
 
 
 ##############################################################################
-
-def get_luminous_latest_tag():
-    rvalue = get_api_docker_latest_tag("ceph",
-                                       "daemon-base",
-                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
-                                       "luminous")
-    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
-    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
-    rvalue = rvalue.split("-")
-    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
-    return rvalue
-
-
-def get_nautilus_latest_tag():
-    rvalue = get_api_docker_latest_tag("ceph",
-                                       "daemon-base",
-                                       "vNUM.NUM.NUM-stable-NUM.NUM-STRING-*",
-                                       "nautilus")
-    # Transform vNUM.NUM.NUM-stable-NUM.NUM-STRING-*
-    # to vNUM.NUM.NUM-stable-NUM.NUM-STRING
-    rvalue = rvalue.split("-")
-    rvalue = rvalue[0] + "-" + rvalue[1] + "-" + rvalue[2] + "-" + rvalue[3]
-    return rvalue
 
 
 def get_octopus_latest_tag():
@@ -154,8 +131,6 @@ def get_pacific_latest_tag():
 
 
 def set_build_docker_image(
-        latest_luminous_version,
-        latest_nautilus_version,
         latest_octopus_verison,
         latest_pacific_version):
     print(locals().values())
@@ -166,10 +141,6 @@ def set_build_docker_image(
     with open(file, "w") as stream:
         for line in buf:
             latest_version = ""
-            if ("-luminous" in line and not line.startswith("#")):
-                latest_version = latest_luminous_version
-            if ("-nautilus" in line and not line.startswith("#")):
-                latest_version = latest_nautilus_version
             if ("-octopus" in line and not line.startswith("#")):
                 latest_version = latest_octopus_verison
             if ("-pacific" in line and not line.startswith("#")):
@@ -183,7 +154,6 @@ def set_build_docker_image(
 ##############################################################################
 # Main
 ##############################################################################
-set_build_docker_image(get_luminous_latest_tag(),
-                       get_nautilus_latest_tag(),
-                       get_octopus_latest_tag(),
-                       get_pacific_latest_tag())
+set_build_docker_image(
+    get_octopus_latest_tag(),
+    get_pacific_latest_tag())
