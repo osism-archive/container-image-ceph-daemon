@@ -28,7 +28,9 @@ else
     version="${VERSION}-${DISTRIBUTION}-x86_64"
 fi
 
-docker build \
+buildah build-using-dockerfile \
+    --format docker \
+    --privileged \
     --build-arg "VERSION=${version}" \
     --tag "${REPOSITORY}:${version}" \
     --label "org.opencontainers.image.created=${CREATED}" \

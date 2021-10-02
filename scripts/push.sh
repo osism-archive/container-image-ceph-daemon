@@ -27,13 +27,13 @@ else
 fi
 
 tag_version=$(echo "${VERSION:1}" | cut -d- -f1)
-if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect "${REPOSITORY}:${tag_version}" > /dev/null; then
+if skopeo inspect --creds "${DOCKER_USERNAME}:${DOCKER_PASSWORD}" "docker://${REPOSITORY}:${tag_version}" > /dev/null; then
     echo "The image ${REPOSITORY}:${tag_version} already exists."
 else
-    docker tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_version}"
-    docker push "${REPOSITORY}:${tag_version}"
+    buildah tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_version}"
+    buildah push "${REPOSITORY}:${tag_version}"
 fi
 
 tag_release=$(echo "${VERSION}" | rev | cut -d- -f1 | rev)
-docker tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_release}"
-docker push "${REPOSITORY}:${tag_release}"
+buildah tag "${REPOSITORY}:${tag}" "${REPOSITORY}:${tag_release}"
+buildah push "${REPOSITORY}:${tag_release}"
