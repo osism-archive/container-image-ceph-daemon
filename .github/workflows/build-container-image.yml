@@ -53,4 +53,6 @@ jobs:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
           VERSION: ${{ matrix.version }}
           REPOSITORY: osism/ceph-daemon
-        if: github.ref == 'refs/heads/main'
+        if: |
+          github.repository == 'osism/container-image-ceph-daemon' &&
+          github.ref == 'refs/heads/main'
